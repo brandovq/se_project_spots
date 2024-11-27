@@ -1,0 +1,10 @@
+.page {
+  background-color: #fcf5e5;
+  min-height: 100vh;
+}
+
+.page__section {
+  max-width: 1280px;
+  margin: 0 auto;
+  /*IMPORTANT TO NOTE: this mix that was added after the class name for the profile and cards sections was what made the cards all aligned towards the center of the page by restricting the width. I had to add both margin: 0 auto and max-width of 1280px to make the cards center with the header's width. The 1280px was given in figma after clicking the ehader it'll tell you the width for that section. I then just added this mix to make everything center within 1280px with the margin: 0 auto property. Must use both to make it work*/
+}

@@ -1,0 +1,17 @@
+.cards {
+  padding-top: 20px;
+}
+
+.cards__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  /*for the ul elements you should remove the default margin and padding so I set them to 0*/
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 413px);
+  gap: 40px 20px;
+  justify-content: center;
+  /*justify-content was then added to center all the cards*/
+
+  /*IMPORTANT NOTE: go to page__section selector (this was created for one main purpose: to align evryhting on teh webpage based on the design on figma) to undsertand how I made everything become aligned on the webpage*/
+}

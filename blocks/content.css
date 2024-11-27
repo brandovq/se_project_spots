@@ -1,0 +1,8 @@
+.content {
+  padding: 0 20px 40px;
+  /*this padding was necessary to keep the spacing on the sides when viewing in lower resolution screens so that the sides won't touch. Also added the bottom padding*/
+  border-bottom: 1px rgb(33, 33, 33, 0.4) solid;
+  max-width: 1280px;
+  margin: 0 auto;
+  /*Both margin: 0 auto and max-width: 1280px had to be added in order to restrict the size of the bottom border that I added (make it smaller) and make it the same length as the page content. 1280px was got from the header's dimensions in figma*/
+}

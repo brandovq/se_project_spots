@@ -1,0 +1,54 @@
+.profile {
+  display: flex;
+  padding: 34px 0 20px;
+  border-bottom: 1px rgb(33, 33, 33, 0.4) solid;
+}
+.profile__avatar {
+  margin-right: 20px;
+  border-radius: 10px;
+}
+.profile__column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile__name {
+  margin: 0 0 12px;
+}
+
+.profile__description {
+  margin: 0;
+  color: #212121;
+  opacity: 70%;
+}
+
+.profile__edit-btn {
+  margin-top: auto;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  gap: 7px;
+  color: #212121;
+  opacity: 70%;
+}
+
+.profile__add-btn {
+  margin-left: auto;
+  /*adding margin-left: auto pushes the new post button to the right after adding display flex*/
+  background-color: #212121;
+  color: #fcf5e5;
+  width: 149px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*justify content and align items centers the text inside the box. But remember that you have to make it a flex box first*/
+  align-self: end;
+  /*you could also use margin-top: auto instead of align-self: end to make the button move from the top to the bottom to make it align with the other button on the far left*/
+  gap: 8px;
+  /*note that you need flexbox to add gap*/
+  border-radius: 8px;
+  border: 1px rgb(0, 0, 0, 100) solid;
+}
