@@ -1,6 +1,8 @@
 .page {
   background-color: #fcf5e5;
   min-height: 100vh;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  /*Not sure why font family isn't applying, the letters look different from the font in figma. Come back to this*/
 }
 
 .page__section {

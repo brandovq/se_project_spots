@@ -6,6 +6,9 @@
 .profile__avatar {
   margin-right: 20px;
   border-radius: 10px;
+  height: 190px;
+  width: 190px;
+  /*height and width was added because of the media quieries*/
 }
 .profile__column {
   display: flex;
@@ -15,12 +18,31 @@
 
 .profile__name {
   margin: 0 0 12px;
+  font-weight: 500;
+  /*I searched font weight for medium on google and it said 500 so I added font-weight: 500 individually to the ones that have a medium font weight. Because if I type in just medium the browser keeps overriding the default browser's medium font snd it looks too bold which is not what we want for this project*/
+  font-size: 32px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-width: 420px;
 }
 
 .profile__description {
   margin: 0;
   color: #212121;
   opacity: 70%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-width: 420px;
 }
 
 .profile__edit-btn {
@@ -32,6 +54,16 @@
   gap: 7px;
   color: #212121;
   opacity: 70%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.profile__edit-btn:hover {
+  color: #212121;
+  opacity: 1;
 }
 
 .profile__add-btn {
@@ -51,4 +83,56 @@
   /*note that you need flexbox to add gap*/
   border-radius: 8px;
   border: 1px rgb(0, 0, 0, 100) solid;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.profile__add-btn:hover {
+  background-color: #212121;
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 627px) {
+  .profile {
+    flex-direction: column;
+    max-width: 288px;
+    align-items: center;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .profile__avatar {
+    margin-right: 0;
+    width: 80px;
+    height: 80px;
+    margin: 0 0 12px;
+  }
+
+  .profile__column {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile__name {
+    margin: 0 0 6px;
+    font-size: 20px;
+    max-width: 288px;
+  }
+
+  .profile__description {
+    margin: 0 0 32px;
+    max-width: 288px;
+  }
+
+  .profile__edit-btn {
+    margin: 0 0 20px;
+  }
+
+  .profile__add-btn {
+    margin: 0;
+    width: 100%;
+  }
 }

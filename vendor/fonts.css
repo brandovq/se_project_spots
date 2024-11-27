@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  /* Replace with the appropriate font weight */
+  font-weight: 400;
+  /* Replace with the correct file path */
+  src: url("./fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  /* Replace with the appropriate font weight. Also, I searched font weight for medium font (what it says on figma) on google and it said medium is 500 so I added 500 here */
+  font-weight: 500;
+  /* Replace with the correct file path below */
+  src: url("./fonts/Poppins-Medium.ttf") format("truetype");
+}

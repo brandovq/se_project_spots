@@ -6,3 +6,11 @@
   margin: 0 auto;
   /*Both margin: 0 auto and max-width: 1280px had to be added in order to restrict the size of the bottom border that I added (make it smaller) and make it the same length as the page content. 1280px was got from the header's dimensions in figma*/
 }
+
+@media screen and (max-width: 627px) {
+  .content {
+    max-width: 288px;
+    margin: 0 auto;
+    /*Border seems to be a bit longer than the bottom border at the top for some reason. Find out why????*/
+  }
+}

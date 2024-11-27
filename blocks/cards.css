@@ -13,5 +13,11 @@
   justify-content: center;
   /*justify-content was then added to center all the cards*/
 
-  /*IMPORTANT NOTE: go to page__section selector (this was created for one main purpose: to align evryhting on teh webpage based on the design on figma) to undsertand how I made everything become aligned on the webpage*/
+  /*IMPORTANT NOTE: go to page__section selector (this was created for one main purpose: to align everything on the webpage based on the design on figma) to understand how I got everything aligned on the webpage*/
+}
+
+@media screen and (max-width: 627px) {
+  .cards__list {
+    grid-template-columns: repeat(auto-fit, 288px);
+  }
 }
