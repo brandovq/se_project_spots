@@ -8,6 +8,7 @@
   object-fit: cover;
   /*object-fit is usually good to use with images to make them appear better*/
   display: block;
+  border-radius: 8px;
 }
 
 .card__content {
@@ -27,6 +28,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 353px;
+  margin: 0;
 }
 
 .card__like-btn {
@@ -41,17 +43,21 @@
 }
 
 .card__like-btn:hover {
-  color: #212121;
   opacity: 1;
 }
 
 @media screen and (max-width: 627px) {
   .card__image {
     width: 288px;
-    height: 318px;
+    height: 288px;
   }
 
   .card__title {
     font-size: 16px;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 264px;
   }
 }

@@ -10,7 +10,7 @@
 @media screen and (max-width: 627px) {
   .content {
     max-width: 288px;
-    margin: 0 auto;
-    /*Border seems to be a bit longer than the bottom border at the top for some reason. Find out why????*/
+    /*Setting max-width to 288px fixed the bottom border length issue. I had to play around with it because if I set the max-width to to the image width of 288px for some reason it didn't make the bottom border the same length of the image so I had to make the value (in px) smaller. I could see the alignment through developer tools when I move the mouse to the margin: 0 auto property. Adding Margin: 0 auto to the media query is a duplicate move I think, I don't think I need it so I removed it in the media query here*/
+    padding: 20px 16px;
   }
 }
