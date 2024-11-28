@@ -29,6 +29,8 @@
   overflow: hidden;
   max-width: 353px;
   margin: 0;
+  padding-bottom: 4px;
+  /*This padding was added so the bottom part of the letters (ex. g) won't get cut off. Based on Figma it was 4px of padding here*/
 }
 
 .card__like-btn {
