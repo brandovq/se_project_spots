@@ -28,14 +28,16 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 353px;
-  margin: 0;
   padding-bottom: 4px;
   /*This padding was added so the bottom part of the letters (ex. g) won't get cut off. Based on Figma it was 4px of padding here*/
+  margin-bottom: auto;
+  /*I had to add margin-bottom: auto because the bottom padding I added misaligned the description and the icon, this fixed the issue. Since bottom padding was adde to the title, then bottom margins were set to auto to align the description and icon again*/
 }
 
 .card__like-btn {
   background-image: url(../images/heart.svg);
   background-repeat: no-repeat;
+  margin-left: auto;
   width: 23px;
   height: 20px;
   border: none;
