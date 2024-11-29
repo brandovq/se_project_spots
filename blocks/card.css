@@ -37,6 +37,7 @@
 .card__like-btn {
   background-image: url(../images/heart.svg);
   background-repeat: no-repeat;
+  position: relative;
   margin-left: auto;
   width: 23px;
   height: 20px;
