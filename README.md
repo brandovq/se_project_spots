@@ -35,4 +35,4 @@ Link to project on GitHub Pages:
 https://brandovq.github.io/se_project_spots
 
 Link to video overview for this project:
-https://drive.google.com/file/d/1g2dDGvnRdpxsdIFP1OqMoxzticcGey9d/view?usp=sharing
+https://drive.google.com/file/d/1M1E-PPgrlwMyYfgqtN0UBiKryhkvRsv-/view?usp=sharing
