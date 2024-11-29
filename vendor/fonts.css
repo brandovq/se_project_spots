@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Poppins";
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
   font-style: normal;
   /* Replace with the appropriate font weight */
   font-weight: 400;
@@ -8,7 +8,7 @@
 }
 
 @font-face {
-  font-family: "Poppins";
+  font-family: "Poppins" Arial, Helvetica, sans-serif;
   font-style: normal;
   /* Replace with the appropriate font weight. Also, I searched font weight for medium font (what it says on figma) on google and it said medium is 500 so I added 500 here */
   font-weight: 500;

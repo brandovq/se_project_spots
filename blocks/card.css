@@ -17,6 +17,7 @@
   align-items: center;
   /*after centering the card__content I needed to restrict the width to make the heart icon stay underneath the image and not go all the way to the right side of the page. To restrict it, I added the same width as the image to the main container which is the li for this card (it was added to the .card selector*/
   margin-top: 12px;
+  max-width: 413px;
 }
 
 .card__title {
