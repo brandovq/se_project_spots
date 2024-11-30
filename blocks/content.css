@@ -8,5 +8,7 @@
     /*Setting max-width to 288px fixed the bottom border length issue. I had to play around with it because if I set the max-width to to the image width of 288px for some reason it didn't make the bottom border the same length of the image so I had to make the value (in px) smaller. I could see the alignment through developer tools when I move the mouse to the margin: 0 auto property. Adding Margin: 0 auto to the media query is a duplicate move I think, I don't think I need it so I removed it in the media query here*/
     padding: 0 10px;
     /*Adjusting the left and right padding from 20px on desktop to 10px for mobile made the border width equal to the size of the content. If I leave it 20px the border width looks smaller than the width of the content on mobile*/
+    margin: 0 auto;
+    /*This fixes the issue of the content being more to the left on mobile. It doesn't show you in developer tools you have to go to your phone as see it there. Without margin: 0 auto on the phone it looks off now it looks normal*/
   }
 }
