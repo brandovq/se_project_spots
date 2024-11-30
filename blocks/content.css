@@ -1,16 +1,12 @@
 .content {
-  padding: 0 20px 40px;
-  /*this padding was necessary to keep the spacing on the sides when viewing in lower resolution screens so that the sides won't touch. Also added the bottom padding*/
-  border-bottom: 1px rgb(33, 33, 33, 0.4) solid;
-  max-width: 1280px;
-  margin: 0 auto;
-  /*Both margin: 0 auto and max-width: 1280px had to be added in order to restrict the size of the bottom border that I added (make it smaller) and make it the same length as the page content. 1280px was got from the header's dimensions in figma*/
+  padding: 0 20px;
 }
 
 @media screen and (max-width: 627px) {
   .content {
     max-width: 288px;
     /*Setting max-width to 288px fixed the bottom border length issue. I had to play around with it because if I set the max-width to to the image width of 288px for some reason it didn't make the bottom border the same length of the image so I had to make the value (in px) smaller. I could see the alignment through developer tools when I move the mouse to the margin: 0 auto property. Adding Margin: 0 auto to the media query is a duplicate move I think, I don't think I need it so I removed it in the media query here*/
-    padding: 20px 16px;
+    padding: 0 10px;
+    /*Adjusting the left and right padding from 20px on desktop to 10px for mobile made the border width equal to the size of the content. If I leave it 20px the border width looks smaller than the width of the content on mobile*/
   }
 }
