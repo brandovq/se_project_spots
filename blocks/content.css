@@ -9,6 +9,6 @@
     padding: 0 10px;
     /*Adjusting the left and right padding from 20px on desktop to 10px for mobile made the border width equal to the size of the content. If I leave it 20px the border width looks smaller than the width of the content on mobile*/
     margin: 0 auto;
-    /*This fixes the issue of the content being more to the left on mobile. It doesn't show you in developer tools you have to go to your phone as see it there. Without margin: 0 auto on the phone it looks off now it looks normal*/
+    /*IMPORTANT PIECE HERE: This fixes the issue of the content being more to the left on mobile. It doesn't show you in developer tools I had to open it on my your phone to see the issue. Without adding margin: 0 auto on the phone it looks off now it looks normal*/
   }
 }
