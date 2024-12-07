@@ -1,0 +1,138 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  padding: 0 16px;
+  /*added this bit of padding so that the sides won't touch when reducing screen size*/
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+.modal__container {
+  background: #fff;
+  padding: 32px 50px;
+  max-width: 730px;
+  width: 100%;
+  box-sizing: border-box;
+  /*IMPORTANT TO NOTE: to correct the extra padding that's getting added to the container we need to add box-sizing: border-box*/
+  position: relative;
+  /*position: relative made the x button was initially on the left by default go to the right side 'relative' to the container*/
+  border-radius: 8px;
+  /*The border-radius property made the corners round*/
+}
+
+.modal__close-btn {
+  position: absolute;
+  background-image: url(../images/close-btn.svg);
+  border: none;
+  background-color: transparent;
+  opacity: 40%;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  top: 26px;
+  /*This adjusted the positioning of the close button to make it go a bit more up by removing size*/
+  right: 50px;
+  /*Top and right property refers to element's positioning from the top and right of the container*/
+  /*Good to note: In this case I couldn't rely on padding because we pulled the button element out of the flow and it ignores the padding on the parent, so we have to add top and right property for the spacing on the top and right of the button*/
+  /*Note: if you're adjusting spacing outside or inside an element, you'd use margin or padding. However, top and right properties are strictly about element positioning*/
+}
+
+.modal__close-btn:hover {
+  opacity: 1;
+}
+
+.modal__title {
+  margin: 0 0 32px;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+  color: rgb(33, 33, 33, 0.7);
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.modal__input {
+  padding: 16px 12px;
+  color: rgb(33, 33, 33, 1);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.modal__submit-btn {
+  width: 156px;
+  padding: 18px 0;
+  background-color: #212121;
+  color: #fcf5ef;
+  border: none;
+  border-radius: 8px;
+  /*The border-radius property made the corners round*/
+  transition: opacity 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.modal__submit-btn:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 627px) {
+  .modal {
+    padding: 0 10px;
+  }
+
+  .modal__container {
+    padding: 12px;
+  }
+
+  .modal__title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1;
+    margin: 10px 0 34px;
+    /*THe bottom margin was 10px below the title itself, then I added 24px more which is for the bottom margin from the title to the label*/
+  }
+
+  .modal__input {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .modal__close-btn {
+    top: 12px;
+    right: 12px;
+  }
+
+  .modal__label {
+    margin-bottom: 24px;
+  }
+
+  .modal__submit-btn {
+    width: 100%;
+  }
+}
