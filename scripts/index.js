@@ -45,16 +45,22 @@ const editModalDescriptionInput = editModal.querySelector(
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
+//To explain what I did below, the getCardElement function is what's cloning the cards.
+//I just had to add the const cardTitle and const cardImage for src and alt to get added onto each card. The info that's being added to each card was added at the top of this javascript file. The name and link (which is the image for each card) is what's being cloned in the getCardElement function. That's how the info is showing on each card.
+
 function getCardElement(data) {
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
 
-  const cardNameEl = cardElement.querySelector(".card__title");
-  //TODO, last step: select their image elements
+  const cardTitleEl = cardElement.querySelector(".card__title");
+  const cardImageEl = cardElement.querySelector(".card__image");
+  //TODO, last step: select their image elements (2nd line is what I added)
 
-  cardNameEl.textContent = data.name;
-  //TODO, last step: assign values to the image src and alt attributes
+  cardTitleEl.textContent = data.name;
+  cardImageEl.src = data.link;
+  cardImageEl.alt = data.name;
+  //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line is what I added)
 
   return cardElement;
 }
