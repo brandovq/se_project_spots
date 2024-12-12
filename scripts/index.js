@@ -42,6 +42,12 @@ const editModalDescriptionInput = editModal.querySelector(
 /*       The first cont has an id in the html because its the main container, but for the rest of the elements you need to select inside of the that container, instead of adding id after id you'd just select them from inside the element individually like I did with the editModalCloseButton const. I entered "editModal.querySelector" instead of document.querySelector       */
 /*       For the third const I added an ID, then went to html to edit and add that same name for the "id" and "for" values of the input and label. Remember that the id and for values have to be the same in the html             */
 
+const cardTemplate = document.querySelector("#card-template");
+
+function getCardElement(data) {
+  console.log(data);
+}
+
 function openModal() {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
@@ -65,3 +71,7 @@ editModalCloseBtn.addEventListener("click", closeModal);
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 /*     Add the following below profileEditButton just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log("CLICKED");       */
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
+
+for (let i = 0; i < initialCards.length; i++) {
+  getCardElement(initialCards[i]);
+}
