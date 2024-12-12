@@ -43,9 +43,20 @@ const editModalDescriptionInput = editModal.querySelector(
 /*       For the third const I added an ID, then went to html to edit and add that same name for the "id" and "for" values of the input and label. Remember that the id and for values have to be the same in the html             */
 
 const cardTemplate = document.querySelector("#card-template");
+const cardsList = document.querySelector(".cards__list");
 
 function getCardElement(data) {
-  console.log(data);
+  const cardElement = cardTemplate.content
+    .querySelector(".card")
+    .cloneNode(true);
+
+  const cardNameEl = cardElement.querySelector(".card__title");
+  //TODO, last step: select their image elements
+
+  cardNameEl.textContent = data.name;
+  //TODO, last step: assign values to the image src and alt attributes
+
+  return cardElement;
 }
 
 function openModal() {
@@ -73,5 +84,7 @@ editFormElement.addEventListener("submit", handleEditFormSubmit);
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
 
 for (let i = 0; i < initialCards.length; i++) {
-  getCardElement(initialCards[i]);
+  const cardElement = getCardElement(initialCards[i]);
+  //added to DOM
+  cardsList.prepend(cardElement);
 }
