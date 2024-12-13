@@ -29,6 +29,8 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 420px;
+  padding-bottom: 4px;
+  /*I added this padding which wasn't in figma design so that the bottom part of the letters (ex. g) won't get cut off*/
 }
 
 .profile__description {
@@ -44,6 +46,8 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 420px;
+  padding-bottom: 2px;
+  /*I added this padding which wasn't in figma design so that the bottom part of the letters (ex. g) won't get cut off*/
 }
 
 .profile__edit-btn {
