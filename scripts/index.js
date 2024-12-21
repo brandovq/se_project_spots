@@ -92,5 +92,6 @@ editFormElement.addEventListener("submit", handleEditFormSubmit);
 for (let i = 0; i < initialCards.length; i++) {
   const cardElement = getCardElement(initialCards[i]);
   //added to DOM
-  cardsList.prepend(cardElement);
+  cardsList.append(cardElement);
+  //added append above even though the project video said to use prepend because prepend will make the first card go last and the second follows right after it. With append, it puts the it leaves the order how it shows it in the design.
 }
