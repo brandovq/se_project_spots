@@ -49,7 +49,7 @@
               </li>
             </template>
 
-            <!--  Just for my reference, I was able to delete/remove this part from my html because it was added through javascript. I added a template for the card (the whole li and just removed the title hor h2, src, and alt. They were all added from javascript.). I can delete this whole comment part I just put it here for reference on why I did it.
+            <!--  Just for my reference, I was able to delete/remove this part from my html because it was added through javascript. I added a template for the card (the whole li and just removed the title for h2, src, and alt. They were all added from javascript.). I can delete this whole comment part I just put it here for reference on why I did it.
 
               <li class="card">
                 <img
@@ -128,7 +128,7 @@
       </footer>
       <div class="modal" id="edit-modal">
         <!-- Added modifier here called modal_opened which is to make background appear. It was just to edit that part out but then I removed it -->
-        <!-- Then, I removed the modal_opened and added the id="edit-profile-modal" since we're going to be using it again in a 2nd form -->
+        <!-- Then, I removed the modal_opened and added the id="edit-modal" since we're going to be using it again in a 2nd form -->
         <div class="modal__container">
           <button type="submit" class="modal__close-btn"></button>
           <h2 class="modal__title">Edit profile</h2>
@@ -137,18 +137,52 @@
               Name
               <input
                 id="profile-name-input"
-                type="text"
                 class="modal__input"
+                name="name"
                 placeholder="Type your name"
+                type="text"
               />
             </label>
             <label for="profile-description-input" class="modal__label">
               Description
               <input
                 id="profile-description-input"
-                type="text"
                 class="modal__input"
+                name="description"
                 placeholder="Describe yourself"
+                type="text"
+              />
+            </label>
+            <button type="submit" class="modal__submit-btn">Save</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="add-card-modal">
+        <!-- Added modifier here called modal_opened which is to make background appear. It was just to edit that part out but then I removed it -->
+        <!-- Then, I removed the modal_opened and added the id="edit-modal" since we're going to be using it again in a 2nd form -->
+        <div class="modal__container">
+          <button type="submit" class="modal__close-btn"></button>
+          <h2 class="modal__title">New Post</h2>
+          <form name="edit-profile" class="modal__form" id="add-card-form">
+            <label class="modal__label" for="add-card-link-input">
+              Image link
+              <input
+                id="add-card-link-input"
+                class="modal__input"
+                name="link"
+                placeholder="Paste a link to the picture"
+                type="url"
+              />
+            </label>
+            <label for="add-card-name-input" class="modal__label">
+              Caption
+              <input
+                id="add-card-name-input"
+                class="modal__input"
+                name="name"
+                placeholder="Type your caption"
+                type="text"
               />
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
