@@ -29,7 +29,7 @@
             <h1 class="profile__name">Bessie Coleman</h1>
             <p class="profile__description">Civil Aviator</p>
             <button type="button" class="profile__edit-btn">
-              <!--- Important note: whenever you use the button property, include the type=" " attribute. It will be either submit, reset, or if their neither you just use "button" for the type-->
+              <!--- Important note: whenever you use the button property, include the type=" " attribute. It will be either submit, reset, or if their neither you just use "button" for the type -->
               <img src="./images/pencil.svg" alt="pencil icon" />Edit Profile
             </button>
           </div>
@@ -41,6 +41,7 @@
           <ul class="cards__list">
             <template id="card-template">
               <li class="card">
+                <button type="button" class="card__delete-btn"></button>
                 <img src="" alt="" class="card__image" />
                 <div class="card__content">
                   <h2 class="card__title"></h2>
@@ -187,6 +188,19 @@
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
           </form>
+        </div>
+      </div>
+
+      <div class="modal" id="preview-modal">
+        <div class="modal__container modal__container_type_preview">
+          <button
+            type="submit"
+            class="modal__close-btn modal__close-btn_type_preview"
+          ></button>
+          <img class="modal__image" src="" alt="" />
+          <div class="modal__caption_wrapper">
+            <p class="modal__caption"></p>
+          </div>
         </div>
       </div>
     </div>

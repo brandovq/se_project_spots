@@ -32,7 +32,7 @@ const cardModalButton = document.querySelector(".profile__add-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
-//Form elements
+//Form elements for Modal 1
 const editModal = document.querySelector("#edit-modal");
 const editFormElement = editModal.querySelector(".modal__form");
 const editModalCloseBtn = editModal.querySelector(".modal__close-btn");
@@ -41,15 +41,24 @@ const editModalDescriptionInput = editModal.querySelector(
   "#profile-description-input"
 );
 
+//Form elements for Modal 2
 const cardModal = document.querySelector("#add-card-modal");
+const cardForm = cardModal.querySelector(".modal__form");
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
-
+const cardNameInput = cardModal.querySelector("#add-card-name-input");
+const cardLinkInput = cardModal.querySelector("#add-card-link-input");
 /*       For the "const cardModal" part, I can call the variable whatever I want where it says cardModal but that would be an appropriate name in this case so I'm using that one. Also, I can find the appropriate class to give it by finding its id name on my html. In this case we want to use add-card-modal. DON'T FORGET TO ADD THE HASHTAG*/
-
 /*       The first part of the declarations above (profileEditButton annd editProfileButton) is a unique name I want give them. I added the hashtag on the second part because its a character that tells query selector that you're looking for an element with that id      */
 /*       Add the following below the 2nd const just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log(editProfileModal);       */
 /*       The first cont has an id in the html because its the main container, but for the rest of the elements you need to select inside of the that container, instead of adding id after id you'd just select them from inside the element individually like I did with the editModalCloseButton const. I entered "editModal.querySelector" instead of document.querySelector       */
 /*       For the third const I added an ID, then went to html to edit and add that same name for the "id" and "for" values of the input and label. Remember that the id and for values have to be the same in the html             */
+const previewModal = document.querySelector("#preview-modal");
+const previewModalImageEl = previewModal.querySelector(".modal__image");
+const previewModalCaptionEl = previewModal.querySelector(".modal__caption");
+/*       Step 1 for previewModal = select it    */
+const previewModalCloseBtn = previewModal.querySelector(
+  ".modal__container_type_preview"
+);
 
 //Card related elements below
 const cardTemplate = document.querySelector("#card-template");
@@ -65,12 +74,39 @@ function getCardElement(data) {
 
   const cardTitleEl = cardElement.querySelector(".card__title");
   const cardImageEl = cardElement.querySelector(".card__image");
-  //TODO, last step: select their image elements (2nd line is what I added)
+  //Last step: I selected the image element (2nd line is what I added)
+  const cardLikeBtn = cardElement.querySelector(".card__like-btn");
+  //LIKE BUTTON: Step 1 was to select the element (in this case the like btn above). If I forget what class to put inside the parenthesis above then look at the html and find the class I used for the like button. IMPORTANT, don't forget to put a " . " for the class that's why I kept getting an error I had forgot the dot.
+  const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
+  //DELETE BUTTON: Step 1: select the delete button
 
   cardTitleEl.textContent = data.name;
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
-  //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line is what I added)
+  //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
+  cardLikeBtn.addEventListener("click", () => {
+    cardLikeBtn.classList.toggle("card__like-btn_liked");
+  });
+  //LIKE BUTTON (above): Step 2 add the event listener for the like button and STEP 3 add event handler
+
+  cardImageEl.addEventListener("click", () => {
+    openModal(previewModal);
+    previewModalCaptionEl.textContent = data.name;
+    previewModalImageEl.src = data.link;
+    previewModalImageEl.alt = data.name;
+  });
+  /*       Step 2 for previewModal = add event listener     */
+
+  cardDeleteBtn.addEventListener("click", () => {
+    cardElement.remove();
+  });
+  //DELETE BUTTON (above) step 2 add event listener, then step 3 add handler to remove card from DOM. I used arrow function which acts as the event handler.
+
+  previewModalCloseBtn.addEventListener("click", () => {
+    // previewModal.remove();
+    closeModal(previewModal);
+  });
+  /*       Step 3 for previewModal = close Modal using another add event listener     */
 
   return cardElement;
 }
@@ -92,6 +128,17 @@ function handleEditFormSubmit(evt) {
   closeModal(editModal);
 }
 
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
+  //The step above makes the image name and actual image appear when adding a new card
+  const cardElement = getCardElement(inputValues);
+  cardsList.prepend(cardElement);
+  //To make the new card appear as the first card instead of the last I added prepend above instead of append (this one adds the new card at the end not at the beginning which is what we don't want
+  closeModal(cardModal);
+  //closeModal above closes the modal after clicking save
+}
+
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
@@ -111,6 +158,7 @@ cardModalCloseBtn.addEventListener("click", () => {
 });
 
 editFormElement.addEventListener("submit", handleEditFormSubmit);
+cardForm.addEventListener("submit", handleAddCardSubmit);
 /*     Add the following below profileEditButton just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log("CLICKED");       */
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
 

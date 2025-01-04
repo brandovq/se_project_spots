@@ -29,6 +29,43 @@
   /*position: relative made the x button was initially on the left by default go to the right side 'relative' to the container*/
   border-radius: 8px;
   /*The border-radius property made the corners round*/
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modal__container_type_preview {
+  padding: 0;
+  background: transparent;
+  align-items: center;
+  width: unset;
+  display: unset;
+  /*     I was having an issue keeping the caption aligned on the bottom left of the preview modal picture which pops up after you click an image on a post. So I wrapped a div around the modal__caption and gave it a modifier of wrapper. Then used flexbox to align it with justify content: flex start     */
+  /*     (Cont) I had to unset the width to keep the container_type_preview (the image) centered after you click it. Also, unsetting the display helped to be able to align the modal__caption_wrapper with flexbox through modal__caption_wrapper. If I leave this part out it doesn't let me center the caption properly on the modal__caption_wrapper container.     */
+  /*     The modal__close-btn_type_preview (close btn for the preview modal) got messed up in the process and to fix that I added left: calc(100% + 20px) to make the X symbol on the top right of the picture become properly aligned again.     */
+}
+
+.modal__image {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 0 0 8px;
+}
+
+.modal__caption_wrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal__caption {
+  background-color: #212121;
+  padding: 4px 8px;
+  color: #fff;
+  border-radius: 8px;
+  margin: 0;
+  /* display: inline-block; */
+  /*     display: inline-block made the border on the caption adjust to the amount of words that are inside the box    */
 }
 
 .modal__close-btn {
@@ -50,6 +87,14 @@
   /*Note: if you're adjusting spacing outside or inside an element, you'd use margin or padding. However, top and right properties are strictly about element positioning*/
 }
 
+.modal__close-btn_type_preview {
+  background-image: url("../images/close-btn-light.svg");
+  top: 0;
+  right: unset;
+  opacity: 1;
+  left: calc(100% + 20px);
+}
+
 .modal__close-btn:hover {
   opacity: 1;
 }
@@ -60,6 +105,11 @@
   font-size: 32px;
   line-height: 1;
 }
+
+.modal__form {
+  width: 100%;
+}
+/*     Adding the width: 100 to this class is what makes the input boxes stretch out left to right across the modal container     */
 
 .modal__label {
   display: flex;
