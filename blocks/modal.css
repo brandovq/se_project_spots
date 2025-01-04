@@ -12,11 +12,17 @@
   visibility: hidden;
   padding: 0 16px;
   /*added this bit of padding so that the sides won't touch when reducing screen size*/
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.2s linear;
 }
 
 .modal_opened {
   visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
+/*     The last three lines on .modal (which uses transition with the visibility and opacity properties) and the propertie inside .modal_opened all made teh transition for the modal work properly.     */
 
 .modal__container {
   background: #fff;
