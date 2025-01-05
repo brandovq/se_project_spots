@@ -99,6 +99,8 @@
   right: unset;
   opacity: 1;
   left: calc(100% + 20px);
+  position: absolute;
+  /*     I added position: absolute to be able to position the modal preview close btn to the very top of the picture and towards the right on mobile devices. Wihout this step, the next step won't work. Then, I had to add position sticky to the mobile device media query to make it go to the top right not the side right of the picture like it is on destop.     */
 }
 
 .modal__close-btn:hover {
@@ -183,6 +185,11 @@
     top: 12px;
     right: 12px;
   }
+
+  .modal__close-btn_type_preview {
+    position: sticky;
+  }
+  /*     I added position sticky to the mobile device media query for this class down below to make it go to the top right not the side right like it is on destop     */
 
   .modal__label {
     margin-bottom: 24px;
