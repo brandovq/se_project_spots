@@ -131,8 +131,8 @@
         <!-- Added modifier here called modal_opened which is to make background appear. It was just to edit that part out but then I removed it -->
         <!-- Then, I removed the modal_opened and added the id="edit-modal" since we're going to be using it again in a 2nd form -->
         <div class="modal__container">
-          <button type="submit" class="modal__close-btn"></button>
-          <h2 class="modal__title">Edit profile</h2>
+          <button type="button" class="modal__close-btn"></button>
+          <h2 class="modal__title">Edit Profile</h2>
           <form name="edit-profile" class="modal__form">
             <label for="profile-name-input" class="modal__label">
               Name
@@ -163,8 +163,8 @@
         <!-- Added modifier here called modal_opened which is to make background appear. It was just to edit that part out but then I removed it -->
         <!-- Then, I removed the modal_opened and added the id="edit-modal" since we're going to be using it again in a 2nd form -->
         <div class="modal__container">
-          <button type="submit" class="modal__close-btn"></button>
-          <h2 class="modal__title">New Post</h2>
+          <button type="button" class="modal__close-btn"></button>
+          <h2 class="modal__title">New post</h2>
           <form name="edit-profile" class="modal__form" id="add-card-form">
             <label class="modal__label" for="add-card-link-input">
               Image link
@@ -194,11 +194,11 @@
       <div class="modal" id="preview-modal">
         <div class="modal__container modal__container_type_preview">
           <button
-            type="submit"
+            type="button"
             class="modal__close-btn modal__close-btn_type_preview"
           ></button>
           <img class="modal__image" src="" alt="" />
-          <div class="modal__caption_wrapper">
+          <div class="modal__caption-wrapper">
             <p class="modal__caption"></p>
           </div>
         </div>

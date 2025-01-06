@@ -102,14 +102,14 @@ function getCardElement(data) {
   });
   //DELETE BUTTON (above) step 2 add event listener, then step 3 add handler to remove card from DOM. I used arrow function which acts as the event handler.
 
-  previewModalCloseBtn.addEventListener("click", () => {
-    // previewModal.remove();
-    closeModal(previewModal);
-  });
-  /*       Step 3 for previewModal = close Modal using another add event listener     */
-
   return cardElement;
 }
+
+previewModalCloseBtn.addEventListener("click", () => {
+  // previewModal.remove();
+  closeModal(previewModal);
+});
+/*       Step 3 for previewModal = close Modal using another add event listener     */
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -135,6 +135,9 @@ function handleAddCardSubmit(evt) {
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   //To make the new card appear as the first card instead of the last I added prepend above instead of append (this one adds the new card at the end not at the beginning which is what we don't want
+  cardNameInput.value = "";
+  cardLinkInput.value = "";
+  //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
   closeModal(cardModal);
   //closeModal above closes the modal after clicking save
 }

@@ -26,7 +26,7 @@
 
 .modal__container {
   background: #fff;
-  padding: 32px 50px;
+  padding: 33px 50px;
   max-width: 730px;
   width: 100%;
   box-sizing: border-box;
@@ -57,9 +57,12 @@
   object-fit: contain;
   border-radius: 8px;
   margin: 0 0 8px;
+  width: 100%;
+  overflow: hidden;
+  /*  overflow: hidden fixed the oversized picture issue I was having */
 }
 
-.modal__caption_wrapper {
+.modal__caption-wrapper {
   display: flex;
   justify-content: flex-start;
 }
@@ -160,11 +163,12 @@
 
 @media screen and (max-width: 627px) {
   .modal {
-    padding: 0 10px;
+    padding: 134px 10px;
   }
 
   .modal__container {
     padding: 12px;
+    max-width: 300px;
   }
 
   .modal__title {
@@ -172,13 +176,23 @@
     font-size: 20px;
     line-height: 1;
     margin: 10px 0 34px;
-    /*THe bottom margin was 10px below the title itself, then I added 24px more which is for the bottom margin from the title to the label*/
+    /*The bottom margin was 10px below the title itself, then I added 24px more which is for the bottom margin from the title to the label*/
   }
 
   .modal__input {
     font-weight: 500;
     font-size: 16px;
     line-height: 1;
+  }
+
+  .modal__container_type_preview {
+    padding: unset;
+    max-width: 300px;
+  }
+
+  .modal__image {
+    width: 100%;
+    max-width: 300px;
   }
 
   .modal__close-btn {
