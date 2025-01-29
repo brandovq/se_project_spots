@@ -146,7 +146,8 @@
                 maxlength="40"
                 required
               />
-              <span class="modal__error"></span>
+              <span id="profile-name-input-error" class="modal__error"></span>
+              <!-- Just a good to know make sure to make the span tag's ID the same as the id for the input for Name above to make validation work -->
             </label>
             <label for="profile-description-input" class="modal__label">
               Description
@@ -160,9 +161,10 @@
                 maxlength="200"
                 required
               />
-              <span class="modal__error"
-                >Please lengthen this text to 2 characters or more.</span
-              >
+              <span
+                id="profile-description-input-error"
+                class="modal__error"
+              ></span>
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
           </form>
@@ -186,7 +188,7 @@
                 type="url"
                 required
               />
-              <span class="modal__error">Please enter a URL.</span>
+              <span id="add-card-link-input-error" class="modal__error"></span>
             </label>
             <label for="add-card-name-input" class="modal__label">
               Caption
@@ -200,7 +202,7 @@
                 maxlength="30"
                 required
               />
-              <span class="modal__error">Please fill out this field.</span>
+              <span id="add-card-name-input-error" class="modal__error"></span>
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
           </form>
