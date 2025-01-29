@@ -125,7 +125,7 @@
 .modal__label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* gap: 8px; REMOVED THIS GAP AND ADDED MARGIN-TOP OF 8PX TO MODAL__ERROR INSTEAD*/
   margin-bottom: 32px;
   color: rgb(33, 33, 33, 0.7);
   border-radius: 8px;
@@ -140,6 +140,14 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 1;
+  margin: 8px 0 0;
+}
+
+.modal__error {
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(255, 0, 0, 0.7);
+  margin-top: 8px;
 }
 
 .modal__submit-btn {
