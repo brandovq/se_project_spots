@@ -117,11 +117,13 @@ previewModalCloseBtn.addEventListener("click", () => {
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", handleEscapeKey); // Add listener when modal opens
   //For the adding the class step, I created the modal_opened class in modal.css and added visibility: visible to make it pop up when edit profile is clicked and close when the modal closes (aka classList.add on this openModal function makes it appear and the classList.remove makes it close on the closeModal function below)
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", handleEscapeKey); // Remove listener when modal closes
 }
 /*     For the function part to add Modal (make edit profile pop-up work after you click "edit profile"), you just add the word "add". To remove it when you press the X button, all you'd do is change the word add to "remove" and keep the same class      */
 
@@ -142,6 +144,19 @@ document.addEventListener("keydown", (event) => {
   }
 });
 //GOOD TO KNOW (reusable code): Code above closes Modal on Escape Key Press
+
+function handleEscapeKey(event) {
+  // First "if" below checks "if" the pressed key is the Escape key
+  if (event.key === "Escape") {
+    // Second, code below selects the modal that's currently open (if any)
+    const openModal = document.querySelector(".modal_opened");
+    // Third (code below). If modal is open, close it
+    if (openModal) {
+      closeModal(openModal);
+    }
+  }
+}
+//Last step for the handleEscapeKey function above was to create a "keydown" event listener and make an add AND remove event listener (aka handler) for the open and close modal functions right up above.
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
