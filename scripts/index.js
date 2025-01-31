@@ -1,3 +1,5 @@
+//TODO - Pass settings object to the validation functions that are called on in this file
+
 const initialCards = [
   {
     name: "Val Thorens",
@@ -44,6 +46,8 @@ const editModalDescriptionInput = editModal.querySelector(
 //Form elements for Modal 2
 const cardModal = document.querySelector("#add-card-modal");
 const cardForm = cardModal.querySelector(".modal__form");
+/*  Good to know: I added this part below for the resetValidation code which just removed the error message when the modal opens again, it doesn't just stay there. after reopening */
+const cardSubmitBtn = cardModal.querySelector(".modal__submit-btn");
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 const cardNameInput = cardModal.querySelector("#add-card-name-input");
 const cardLinkInput = cardModal.querySelector("#add-card-link-input");
@@ -138,6 +142,8 @@ function handleAddCardSubmit(evt) {
   cardNameInput.value = "";
   cardLinkInput.value = "";
   //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
+  evt.target.reset(); // Resets the form fields
+  disableButton(cardSubmitBtn, settings);
   closeModal(cardModal);
   //closeModal above closes the modal after clicking save
 }
@@ -145,6 +151,12 @@ function handleAddCardSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
+  //The resetValidation code below, which I added in validation.jss and index.js, is OPTIONAL. It's to make the error reset after you close it with an error. That way once you open it, it won't show the error and it'll reset the error message.
+  resetValidation(
+    editFormElement,
+    [editModalNameInput, editModalDescriptionInput],
+    settings
+  );
   openModal(editModal);
 });
 

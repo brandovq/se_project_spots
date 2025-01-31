@@ -173,6 +173,10 @@
   opacity: 0.8;
 }
 
+.modal__submit-btn-disabled {
+  opacity: 0.5;
+}
+
 @media screen and (max-width: 627px) {
   .modal {
     padding: 134px 10px;
