@@ -164,7 +164,7 @@ function handleAddCardSubmit(evt) {
   // cardNameInput.value = "";
   // cardLinkInput.value = "";
   //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
-  evt.target.reset(); // Resets the form fields (GOOD TO KNOW: The two commens above weren't needed anymore. So i removed it. evt.target.reset() does the same job and clears the inputs at once)
+  evt.target.reset(); // Resets the form fields (GOOD TO KNOW: The two commens above weren't needed anymore. So I removed it. evt.target.reset() does the same job and clears the inputs at once)
   disableButton(cardSubmitBtn, settings);
   closeModal(cardModal);
   //closeModal above closes the modal after clicking save
