@@ -1,7 +1,7 @@
 const showInputError = (formEl, inputEl, errorMsg, config) => {
   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`); //To identify the id on the span tag I created the variable "errorMsgEl" and selected it from the DOM, then I added a template literal by making sure to add the # for the identifier followed by the a template literal (`#${`  }-error` . Adding {inputEl.id}-error inside (which refers to all the inputs). Remembering to add the -error afterwards and closing the template literal with the backtick. The template literal and all this code is for the error message to show up. Then all I had to do was add ID's to all of them to identify the error message and have it show / hide somewhere.
   errorMsgEl.textContent = errorMsg;
-  inputEl.classList.add(config.inputErrorClass);
+  inputEl.classList.add(config.inputErrorClass); // Adds error styling dynamically
   console.log(config);
 };
 //Just an important good to know: make sure to make the span tag's ID in my html is the same as the id for the input for Name, Description, image link, and caption to make validation work. ALSO, MAKE SURE TO NOT FORGET THE -error afterthe name for the ID in the span which is for the error message or else the error message won't show up!!
@@ -9,7 +9,7 @@ const showInputError = (formEl, inputEl, errorMsg, config) => {
 const hideInputError = (formEl, inputEl, config) => {
   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`); //To identify the id on the span tag I created the variable "errorMsgEl" and selected it from the DOM, then I added a template literal by making sure to add the # for the identifier followed by the a template literal (`#${`  }-error` . Adding {inputEl.id}-error inside. Remembering to add the -error afterwards and closing the template literal with the backtick.
   errorMsgEl.textContent = "";
-  inputEl.classList.remove(config.inputErrorClass);
+  inputEl.classList.remove(config.inputErrorClass); // removes error styling dynamically
 };
 
 const checkInputValidity = (formEl, inputEl, config) => {
