@@ -60,9 +60,7 @@ const previewModal = document.querySelector("#preview-modal");
 const previewModalImageEl = previewModal.querySelector(".modal__image");
 const previewModalCaptionEl = previewModal.querySelector(".modal__caption");
 /*       Step 1 for previewModal = select it    */
-const previewModalCloseBtn = previewModal.querySelector(
-  ".modal__container_type_preview"
-);
+const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 
 //Card related elements below
 const cardTemplate = document.querySelector("#card-template");
@@ -136,15 +134,6 @@ document.querySelectorAll(".modal").forEach((modal) => {
 });
 //GOOD TO KNOW (reusable code): Code above closes the modal when clicking on the overlay
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    document.querySelectorAll(".modal.modal_opened").forEach((modal) => {
-      closeModal(modal);
-    });
-  }
-});
-//GOOD TO KNOW (reusable code): Code above closes Modal on Escape Key Press
-
 function handleEscapeKey(event) {
   // First "if" below checks "if" the pressed key is the Escape key
   if (event.key === "Escape") {
@@ -156,7 +145,7 @@ function handleEscapeKey(event) {
     }
   }
 }
-//Last step for the handleEscapeKey function above was to create a "keydown" event listener and make an add AND remove event listener (aka handler) for the open and close modal functions right up above.
+//First step to make escape button close modal was to create this escape "keydown" function handleEscapeKey above. Then I had to create / add a "keydown" event listener and make an add AND remove event listener (aka handler) for the open and close modal functions right up above. So basically after creating the "keydown" event listener I ran handleEscapeKey as a parameter.
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
@@ -172,10 +161,10 @@ function handleAddCardSubmit(evt) {
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   //To make the new card appear as the first card instead of the last I added prepend above instead of append (this one adds the new card at the end not at the beginning which is what we don't want
-  cardNameInput.value = "";
-  cardLinkInput.value = "";
+  // cardNameInput.value = "";
+  // cardLinkInput.value = "";
   //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
-  evt.target.reset(); // Resets the form fields
+  evt.target.reset(); // Resets the form fields (GOOD TO KNOW: The two commens above weren't needed anymore. So i removed it. evt.target.reset() does the same job and clears the inputs at once)
   disableButton(cardSubmitBtn, settings);
   closeModal(cardModal);
   //closeModal above closes the modal after clicking save
