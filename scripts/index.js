@@ -132,7 +132,7 @@ document.querySelectorAll(".modal").forEach((modal) => {
     }
   });
 });
-//GOOD TO KNOW (reusable code): The code above closes the modal when clicking on the the overlay
+//GOOD TO KNOW (reusable code): Code above closes the modal when clicking on the overlay
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
@@ -141,6 +141,7 @@ document.addEventListener("keydown", (event) => {
     });
   }
 });
+//GOOD TO KNOW (reusable code): Code above closes Modal on Escape Key Press
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
