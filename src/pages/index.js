@@ -4,57 +4,87 @@ import {
   settings,
   resetValidation,
 } from "../scripts/validation.js";
+import Api from "../utils/Api.js";
+import { data } from "autoprefixer";
+
 enableValidation(settings);
 
-const initialCards = [
-  {
-    name: "Val Thorens",
-    link: new URL(
-      "../images/1-photo-by-moritz-feldmann-from-pexels.jpg",
-      import.meta.url,
-    ).href,
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "28ea96c7-9894-446d-bd5f-7a7c8ee85463",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Restaurant terrace",
-    link: new URL(
-      "../images/2-photo-by-ceiline-from-pexels.jpg",
-      import.meta.url,
-    ).href,
-  },
-  {
-    name: "An outdoor cafe",
-    link: new URL(
-      "../images/3-photo-by-tubanur-dogan-from-pexels.jpg",
-      import.meta.url,
-    ).href,
-  },
-  {
-    name: "A very long bridge, over the forest and through the trees",
-    link: new URL(
-      "../images/4-photo-by-maurice-laschet-from-pexels.jpg",
-      import.meta.url,
-    ).href,
-  },
-  {
-    name: "Tunnel with morning light",
-    link: new URL(
-      "../images/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-      import.meta.url,
-    ).href,
-  },
-  {
-    name: "Mountain house",
-    link: new URL(
-      "../images/6-photo-by-moritz-feldmann-from-pexels.jpg",
-      import.meta.url,
-    ).href,
-  },
-];
+});
+
+//destructured the second item in the callback of the .then() below
+api
+  .getAppInfo()
+  .then(([cards, userInfo]) => {
+    cards.forEach((item) => {
+      const cardElement = getCardElement(item);
+      cardsList.append(cardElement);
+    });
+
+    //Part 4: Handle the user's information
+    //Set the src of the avatar image
+    // set the textcontent of both the text elements
+    profileAvatar.src = userInfo.avatar;
+    profileName.textContent = userInfo.name;
+    profileDescription.textContent = userInfo.about;
+  })
+  .catch(console.error);
+
+// const initialCards = [
+//   {
+//     name: "Val Thorens",
+//     link: new URL(
+//       "../images/1-photo-by-moritz-feldmann-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+//   {
+//     name: "Restaurant terrace",
+//     link: new URL(
+//       "../images/2-photo-by-ceiline-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+//   {
+//     name: "An outdoor cafe",
+//     link: new URL(
+//       "../images/3-photo-by-tubanur-dogan-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+//   {
+//     name: "A very long bridge, over the forest and through the trees",
+//     link: new URL(
+//       "../images/4-photo-by-maurice-laschet-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+//   {
+//     name: "Tunnel with morning light",
+//     link: new URL(
+//       "../images/5-photo-by-van-anh-nguyen-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+//   {
+//     name: "Mountain house",
+//     link: new URL(
+//       "../images/6-photo-by-moritz-feldmann-from-pexels.jpg",
+//       import.meta.url,
+//     ).href,
+//   },
+// ];
 
 //Profile elements
 const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
 
+const profileAvatar = document.querySelector(".profile__avatar");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
@@ -173,9 +203,18 @@ function handleEscapeKey(event) {
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = editModalNameInput.value;
-  profileDescription.textContent = editModalDescriptionInput.value;
-  closeModal(editModal);
+  api
+    .editUserInfo({
+      name: editModalNameInput.value,
+      about: editModalDescriptionInput.value,
+    })
+    .then((data) => {
+      //Used data argument instead of the input values
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+      closeModal(editModal);
+    })
+    .catch(console.error);
 }
 
 function handleAddCardSubmit(evt) {
@@ -231,8 +270,3 @@ cardForm.addEventListener("submit", handleAddCardSubmit);
 // }
 
 //I commented the for method that I used above instead of removing it as a side note that I changed the changed it to the foreach method below which is more preferrable in code. Its the better alternative.
-
-initialCards.forEach((item) => {
-  const cardElement = getCardElement(item);
-  cardsList.append(cardElement);
-});

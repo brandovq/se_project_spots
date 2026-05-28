@@ -3,13 +3,48 @@
   padding: 34px 0 20px;
   border-bottom: 1px rgb(33, 33, 33, 0.4) solid;
 }
-.profile__avatar {
+
+.profile__avatar-container {
+  position: relative;
   margin-right: 20px;
+}
+
+.profile__avatar-btn {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row; /*flex-direction: row makes the pencil icon and the text "Edit Avatar" appear in a row instead of a column*/
+  justify-content: center; /*justify-content: center centers the pencil icon horizontally in the avatar image*/
+  align-items: flex-end; /*align-items: flex-end moves the pencil icon to the bottom of the avatar image*/
+  gap: 8px;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  visibility: hidden;
+}
+
+.profile__avatar-container:hover .profile__avatar-btn {
+  visibility: visible;
+  cursor: pointer;
+}
+
+.profile__avatar-btn::after {
+  content: "Edit Avatar";
+  color: white;
+}
+
+.profile__avatar {
+  /* margin-right: 20px; */
   border-radius: 8px;
   height: 190px;
   width: 190px;
   /*height and width was added because of the media quieries*/
 }
+
 .profile__column {
   display: flex;
   flex-direction: column;
@@ -112,6 +147,22 @@
     width: 80px;
     height: 80px;
     margin: 0 0 12px;
+  }
+
+  /* finish mobile avatar button styling below????*/
+  .profile__avatar-btn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0 6px;
+    visibility: hidden;
+  }
+
+  /*set content of ::after element to "" */
+  .profile__avatar-btn::after {
+    content: "";
   }
 
   .profile__column {
