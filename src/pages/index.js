@@ -83,7 +83,7 @@ api
 //Profile elements
 const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
-
+const avatarModalButton = document.querySelector(".profile__avatar-btn");
 const profileAvatar = document.querySelector(".profile__avatar");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
@@ -97,7 +97,7 @@ const editModalDescriptionInput = editModal.querySelector(
   "#profile-description-input",
 );
 
-//Form elements for Modal 2
+// Card form elements for Modal 2
 const cardModal = document.querySelector("#add-card-modal");
 const cardForm = cardModal.querySelector(".modal__form");
 /*  Good to know: I added this part below for the resetValidation code which just removed the error message when the modal opens again, it doesn't just stay there. after reopening */
@@ -110,6 +110,16 @@ const cardLinkInput = cardModal.querySelector("#add-card-link-input");
 /*       Add the following below the 2nd const just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log(editProfileModal);       */
 /*       The first cont has an id in the html because its the main container, but for the rest of the elements you need to select inside of the that container, instead of adding id after id you'd just select them from inside the element individually like I did with the editModalCloseButton const. I entered "editModal.querySelector" instead of document.querySelector       */
 /*       For the third const I added an ID, then went to html to edit and add that same name for the "id" and "for" values of the input and label. Remember that the id and for values have to be the same in the html             */
+
+// Avatar form elements
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarForm = avatarModal.querySelector(".modal__form");
+/*  Good to know: I added this part below for the resetValidation code which just removed the error message when the modal opens again, it doesn't just stay there. after reopening */
+const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
+const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
+const avatarInput = avatarModal.querySelector("#profile-avatar-input");
+
+// Preview image popup elements
 const previewModal = document.querySelector("#preview-modal");
 const previewModalImageEl = previewModal.querySelector(".modal__image");
 const previewModalCaptionEl = previewModal.querySelector(".modal__caption");
@@ -233,6 +243,21 @@ function handleAddCardSubmit(evt) {
   disableButton(cardSubmitBtn, settings);
 }
 
+//prevent behavior is to prevent the default behavior of the form which is to refresh the page when you click save. We don't want that to happen because we want to be able to see the new card we just added without the page refreshing and losing all the changes we just made. So we use preventDefault below in the submit function to prevent that from happening.
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+  api // Below cleanly points to the new avatar PATCH request!
+    .updateUserAvatar({
+      avatar: avatarInput.value,
+    })
+    .then((data) => {
+      profileAvatar.src = data.avatar; // Instantly changes the picture on my page
+      closeModal(avatarModal);
+      evt.target.reset(); // Clears out the link from the input field box
+    })
+    .catch(console.error);
+}
+
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
@@ -257,8 +282,19 @@ cardModalCloseBtn.addEventListener("click", () => {
   closeModal(cardModal);
 });
 
+//Select avatar modal button at top of the page and add event listener to open the card modal when it's clicked. I added this part below to make the avatar button open the card modal when it's clicked. I also added the code for the close button of the avatar modal which is the same as the other close buttons just with different variable names.
+avatarModalButton.addEventListener("click", () => {
+  openModal(avatarModal);
+});
+
+avatarModalCloseBtn.addEventListener("click", () => {
+  closeModal(avatarModal);
+});
+
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardForm.addEventListener("submit", handleAddCardSubmit);
+
+avatarForm.addEventListener("submit", handleAvatarSubmit);
 /*     Add the following below profileEditButton just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log("CLICKED");       */
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
 

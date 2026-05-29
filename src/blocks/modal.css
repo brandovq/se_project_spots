@@ -14,7 +14,9 @@
   /*added this bit of padding so that the sides won't touch when reducing screen size*/
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s linear 0.5s, opacity 0.2s linear;
+  transition:
+    visibility 0s linear 0.5s,
+    opacity 0.2s linear;
 }
 
 .modal_opened {
@@ -177,6 +179,90 @@
   opacity: 0.5;
 }
 
+.modal__container_type_delete {
+  max-width: 630px;
+  padding: 32px 50px;
+  overflow: visible;
+}
+
+.modal__close-btn_type_delete {
+  top: -24px;
+  right: -30px;
+  width: 22.63px;
+  height: 22.63px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  background-image: none;
+  opacity: 1;
+  position: absolute;
+}
+
+.modal__close-btn_type_delete::before,
+.modal__close-btn_type_delete::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 22.63px;
+  height: 2px;
+  background-color: #fff;
+  transform-origin: center;
+}
+
+.modal__close-btn_type_delete::before {
+  transform: rotate(45deg);
+}
+
+.modal__close-btn_type_delete::after {
+  transform: rotate(-45deg);
+}
+
+.modal__title_type_delete {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 32px;
+  font-size: 24px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.modal__form_type_delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.modal__form_type_delete .modal__submit-btn {
+  width: 156px;
+  padding: 18px 32px;
+  box-sizing: border-box;
+}
+
+.modal__submit-btn_type_delete {
+  background-color: #ff6565;
+  color: #212121;
+  border: none;
+}
+
+.modal__submit-btn_type_cancel {
+  background-color: #fff;
+  color: #212121;
+  border: 1px solid #212121;
+}
+
+.modal__submit-btn_type_delete:hover {
+  background-color: #ff3333;
+  opacity: 1;
+}
+
+.modal__submit-btn_type_cancel:hover {
+  background-color: #212121;
+  color: #fcf5e5;
+  opacity: 1;
+}
+
 @media screen and (max-width: 627px) {
   .modal {
     padding: 134px 10px;
@@ -227,5 +313,28 @@
 
   .modal__submit-btn {
     width: 100%;
+  }
+
+  .modal__container_type_delete {
+    max-width: 300px;
+    padding: 12px;
+  }
+
+  .modal__close-btn_type_delete {
+    top: -24px;
+    right: -2px;
+  }
+
+  .modal__title_type_delete {
+    font-size: 20px;
+    margin: 10px 0 32px;
+  }
+
+  .modal__form_type_delete {
+    gap: 12px;
+  }
+
+  .modal__form_type_delete .modal__submit-btn {
+    width: calc((100% - 12px) / 2);
   }
 }

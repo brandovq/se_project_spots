@@ -24,11 +24,22 @@
         <section class="profile page__section">
           <div class="profile__avatar-container">
             <button class="profile__avatar-btn">
-              <img
+              <!-- <img
                 class="profile__pencil-icon"
                 src="<%=require('./images/pencil.svg')%>"
                 alt="Pencil icon"
-              />
+              /> -->
+              <picture>
+                <source
+                  media="(max-width: 627px)"
+                  srcset="<%=require('./images/pencil-mobile.svg')%>"
+                />
+                <img
+                  class="profile__pencil-icon"
+                  src="<%=require('./images/pencil-white.svg')%>"
+                  alt="Pencil icon"
+                />
+              </picture>
             </button>
             <img
               src="<%=require('./images/avatar.jpg')%>"
@@ -140,7 +151,7 @@
         </section>
       </main>
       <footer class="footer">
-        <p class="footer__copyright">2024 &copy; Brandon Quinonez</p>
+        <p class="footer__copyright">2026 &copy; Brandon Quinonez</p>
       </footer>
       <div class="modal" id="edit-modal">
         <!-- Added modifier here called modal_opened which is to make background appear. It was just to edit that part out but then I removed it -->
@@ -250,6 +261,67 @@
             <p class="modal__caption"></p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="modal" id="avatar-modal">
+      <!-- IMPORTANT: make sure id (above) is the same as the one in the js file for the avatar modal (to select it on the dom in index.js. Remember on index.js you need to add the # which signifies the ID), if not it won't work. Also make sure to add the id for the input and span tag for the avatar form in the html and make sure they are the same as the ones in the js file for validation to work. -->
+      <div class="modal__container">
+        <button type="button" class="modal__close-btn"></button>
+        <h3 class="modal__title">Edit avatar</h3>
+        <form class="modal__form" id="edit-avatar-form" novalidate>
+          <label class="modal__label" for="profile-avatar-input">
+            Avatar
+            <input
+              id="profile-avatar-input"
+              class="modal__input"
+              name="avatar"
+              placeholder="Paste a link to your avatar"
+              required
+            />
+            <span id="profile-avatar-input-error" class="modal__error"></span>
+            <!-- Just a good to know make sure to make the span tag's ID the same as the id for the input for Avatar above to make validation work -->
+          </label>
+          <button
+            type="submit"
+            class="modal__submit-btn modal__submit-btn_disabled"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Style the modal below based on figma design -->
+    <div class="modal modal_opened" id="delete-modal">
+      <!-- IMPORTANT: make sure id (above) is the same as the one in the js file for the delete modal (to select it on the dom in index.js. Remember on index.js you need to add the # which signifies the ID), if not it won't work. Also make sure to add the id for the input and span tag for the delete form in the html and make sure they are the same as the ones in the js file for validation to work. -->
+      <div class="modal__container modal__container_type_delete">
+        <button
+          type="button"
+          class="modal__close-btn modal__close-btn_type_delete"
+        ></button>
+        <h3 class="modal__title modal__title_type_delete">
+          Are you sure you want to delete this image?
+        </h3>
+        <form
+          class="modal__form modal__form_type_delete"
+          id="delete-form"
+          novalidate
+        >
+          <button
+            type="submit"
+            class="modal__submit-btn modal__submit-btn_type_delete"
+          >
+            Delete
+          </button>
+
+          <button
+            type="button"
+            class="modal__submit-btn modal__submit-btn_type_cancel"
+          >
+            Cancel
+          </button>
+        </form>
       </div>
     </div>
   </body>

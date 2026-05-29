@@ -50,6 +50,22 @@ class Api {
       return Promise.reject(`Error: ${res.status}`);
     });
   }
+
+  updateUserAvatar({ avatar }) {
+    //when writing another api method, make sure to change the name of the parameter in the parentheses and then also change it in the body of the fetch request. In this case I changed it to avatar and then also changed it in the body to avatar. Remember that the parameter name is arbitrary but it has to be the same as the one in the body of the fetch request. Also remember to change the base url for this method since its different from the other ones. The base url for this one is /users/me/avatar instead of just /users/me like the getUserInfo method. Make sure to change that part as well.
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
 }
 
 export default Api;

@@ -27,6 +27,14 @@
   visibility: hidden;
 }
 
+.profile__avatar-btn picture,
+.profile__pencil-icon {
+  display: inline-block;
+  width: 18.48px;
+  height: 16px;
+  object-fit: contain;
+}
+
 .profile__avatar-container:hover .profile__avatar-btn {
   visibility: visible;
   cursor: pointer;
@@ -149,15 +157,19 @@
     margin: 0 0 12px;
   }
 
+  .profile__avatar-container {
+    margin: auto;
+  }
+
   /* finish mobile avatar button styling below????*/
+  /******* GOOD TO KNOW: What changed everything and made the button set on the bottom right was applying proper width of pencil icon on mobile from figma. Basically look at width first. Change justify content or align items if necessary for mobile. then apply figma styling like top, bottom px and padding *******/
   .profile__avatar-btn {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 0 6px;
-    visibility: hidden;
+    height: 24px;
+    width: 24px;
+    align-items: flex-start;
+    top: 52px;
+    left: 52px;
+    padding: 0 0 4px 4px;
   }
 
   /*set content of ::after element to "" */
