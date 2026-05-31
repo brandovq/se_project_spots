@@ -27,14 +27,6 @@
   visibility: hidden;
 }
 
-.profile__avatar-btn picture,
-.profile__pencil-icon {
-  display: inline-block;
-  width: 18.48px;
-  height: 16px;
-  object-fit: contain;
-}
-
 .profile__avatar-container:hover .profile__avatar-btn {
   visibility: visible;
   cursor: pointer;
