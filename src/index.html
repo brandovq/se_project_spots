@@ -292,8 +292,9 @@
       </div>
     </div>
 
-    <!-- Style the modal below based on figma design -->
-    <div class="modal modal_opened" id="delete-modal">
+    <!-- Styled the modal below based on figma design -->
+    <div class="modal" id="delete-modal">
+      <!-- To see modal when your adding css styles and havent done javascript yet, just add the modal_opened class next to current the modal class and it will show up. Then when you add the javascript you can remove the modal_opened class and it will work with the js to open and close the modal when you click on the delete button for each card. -->
       <!-- IMPORTANT: make sure id (above) is the same as the one in the js file for the delete modal (to select it on the dom in index.js. Remember on index.js you need to add the # which signifies the ID), if not it won't work. Also make sure to add the id for the input and span tag for the delete form in the html and make sure they are the same as the ones in the js file for validation to work. -->
       <div class="modal__container modal__container_type_delete">
         <button

@@ -3,9 +3,10 @@ import {
   enableValidation,
   settings,
   resetValidation,
+  disableButton,
 } from "../scripts/validation.js";
+import { setButtonText } from "../utils/helpers.js";
 import Api from "../utils/Api.js";
-import { data } from "autoprefixer";
 
 enableValidation(settings);
 
@@ -21,6 +22,8 @@ const api = new Api({
 api
   .getAppInfo()
   .then(([cards, userInfo]) => {
+    currentUserId = userInfo._id;
+
     cards.forEach((item) => {
       const cardElement = getCardElement(item);
       cardsList.append(cardElement);
@@ -119,6 +122,18 @@ const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
 const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const avatarInput = avatarModal.querySelector("#profile-avatar-input");
 
+// Delete modal elements
+const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = deleteModal.querySelector("#delete-form");
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
+const deleteCancelBtn = deleteModal.querySelector(
+  ".modal__submit-btn_type_cancel",
+);
+
+let selectedCard = null;
+let selectedCardId = null;
+let currentUserId = null;
+
 // Preview image popup elements
 const previewModal = document.querySelector("#preview-modal");
 const previewModalImageEl = previewModal.querySelector(".modal__image");
@@ -150,8 +165,19 @@ function getCardElement(data) {
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
   //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
-  cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-btn_liked");
+
+  //isLiked below is to check if the card is already liked by the current user and if it is, it adds the "liked" class to the like button so that it shows up as liked when the page loads. This is important because when you refresh the page, you want to be able to see which cards you have already liked without having to click on them again.
+  const isLiked =
+    data.isLiked ||
+    (data.likes || []).some(
+      (user) => user._id === currentUserId || user === currentUserId,
+    );
+  if (isLiked) {
+    cardLikeBtn.classList.add("card__like-btn_liked");
+  }
+
+  cardLikeBtn.addEventListener("click", (evt) => {
+    handleLike(evt, data._id);
   });
   //LIKE BUTTON (above): Step 2 add the event listener for the like button and STEP 3 add event handler
 
@@ -163,12 +189,78 @@ function getCardElement(data) {
   });
   /*       Step 2 for previewModal = add event listener     */
 
+  //Delete Modal
   cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
+    handleDeleteCard(cardElement, data);
   });
-  //DELETE BUTTON (above) step 2 add event listener, then step 3 add handler to remove card from DOM. I used arrow function which acts as the event handler.
+  //DELETE BUTTON (above): opens delete confirmation modal and stores selected card/id.
 
   return cardElement;
+}
+
+//Delete Modal
+// I added the function to handle the delete card which opens the delete modal and stores the selected card and its id. Then I added the function to handle the delete submit which checks if a card is selected, if it is, it sends a request to the API to delete the card, then removes the card from the DOM and closes the modal. If no card is selected, it just closes the modal without doing anything.
+function handleDeleteCard(cardElement, data) {
+  selectedCard = cardElement;
+  selectedCardId = data._id;
+  openModal(deleteModal);
+}
+
+function handleDeleteSubmit(evt) {
+  evt.preventDefault();
+  const submitBtn =
+    evt.submitter || evt.target.querySelector(".modal__submit-btn_type_delete");
+
+  if (!selectedCard) {
+    closeModal(deleteModal);
+    return;
+  }
+
+  if (!selectedCardId) {
+    selectedCard.remove();
+    selectedCard = null;
+    closeModal(deleteModal);
+    return;
+  }
+
+  setButtonText(submitBtn, true, "Deleting...");
+
+  api
+    .removeCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      selectedCard = null;
+      selectedCardId = null;
+      closeModal(deleteModal);
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
+}
+
+//likeButton funciton / handler
+function handleLike(evt, id) {
+  const likeElement = evt.currentTarget;
+
+  if (likeElement.dataset.likePending === "true") {
+    return;
+  }
+
+  const isLiked = likeElement.classList.contains("card__like-btn_liked");
+
+  likeElement.classList.toggle("card__like-btn_liked");
+  likeElement.dataset.likePending = "true";
+
+  api
+    .changeLikeStatus(id, isLiked)
+    .catch((error) => {
+      likeElement.classList.toggle("card__like-btn_liked");
+      console.error(error);
+    })
+    .finally(() => {
+      likeElement.dataset.likePending = "false";
+    });
 }
 
 previewModalCloseBtn.addEventListener("click", () => {
@@ -213,6 +305,11 @@ function handleEscapeKey(event) {
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
+  const submitBtn =
+    evt.submitter || evt.target.querySelector(".modal__submit-btn");
+
+  setButtonText(submitBtn, true, "Saving...");
+
   api
     .editUserInfo({
       name: editModalNameInput.value,
@@ -223,29 +320,47 @@ function handleEditFormSubmit(evt) {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
       closeModal(editModal);
+      //changed text content to Save
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
+
+//Implement loading text for all other form submissions
 
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
+  const submitBtn =
+    evt.submitter || evt.target.querySelector(".modal__submit-btn");
   const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
-  //The step above makes the image name and actual image appear when adding a new card
-  const cardElement = getCardElement(inputValues);
-  cardsList.prepend(cardElement);
-  //To make the new card appear as the first card instead of the last I added prepend above instead of append (this one adds the new card at the end not at the beginning which is what we don't want
-  // cardNameInput.value = "";
-  // cardLinkInput.value = "";
-  //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
-  closeModal(cardModal);
-  //closeModal above closes the modal after clicking save
-  evt.target.reset(); // Resets the form fields (GOOD TO KNOW: The two commens above weren't needed anymore. So I removed it. evt.target.reset() does the same job and clears the inputs at once)
-  disableButton(cardSubmitBtn, settings);
+
+  setButtonText(submitBtn, true, "Saving...");
+
+  api
+    .addCard(inputValues)
+    .then((cardData) => {
+      const cardElement = getCardElement(cardData);
+      cardsList.prepend(cardElement);
+      closeModal(cardModal);
+      evt.target.reset();
+      disableButton(cardSubmitBtn, settings);
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 //prevent behavior is to prevent the default behavior of the form which is to refresh the page when you click save. We don't want that to happen because we want to be able to see the new card we just added without the page refreshing and losing all the changes we just made. So we use preventDefault below in the submit function to prevent that from happening.
 function handleAvatarSubmit(evt) {
   evt.preventDefault();
+  const submitBtn =
+    evt.submitter || evt.target.querySelector(".modal__submit-btn");
+
+  setButtonText(submitBtn, true, "Saving...");
+
   api // Below cleanly points to the new avatar PATCH request!
     .updateUserAvatar({
       avatar: avatarInput.value,
@@ -255,7 +370,10 @@ function handleAvatarSubmit(evt) {
       closeModal(avatarModal);
       evt.target.reset(); // Clears out the link from the input field box
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false);
+    });
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -275,6 +393,9 @@ editModalCloseBtn.addEventListener("click", () => {
 });
 
 cardModalButton.addEventListener("click", () => {
+  cardSubmitBtn.textContent = "Save";
+  delete cardSubmitBtn.dataset.originalText;
+  disableButton(cardSubmitBtn, settings);
   openModal(cardModal);
 });
 
@@ -291,10 +412,20 @@ avatarModalCloseBtn.addEventListener("click", () => {
   closeModal(avatarModal);
 });
 
+//Delete Modal event listeners below. I added the event listeners for the delete modal which is the same as the other modals just with different variable names. I also added an event listener for the cancel button in the delete modal to close it when clicked without deleting the card.
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
+deleteCancelBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardForm.addEventListener("submit", handleAddCardSubmit);
 
 avatarForm.addEventListener("submit", handleAvatarSubmit);
+deleteForm.addEventListener("submit", handleDeleteSubmit); //Delete Modal form submit event listener
 /*     Add the following below profileEditButton just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log("CLICKED");       */
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
 
