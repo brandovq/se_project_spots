@@ -31,8 +31,13 @@ Techniques and Approach:
 - Button Styling: Buttons are customized for interaction with the hover effect. Smooth transitions were added to it.
 - Responsive Web Design: Ensured that the design works well specifically on desktop and mobile devices.
 
+## Project Pitch Videos
+
+Check out these videos, where I describe my project
+and some challenges I faced while building it:
+
+- [Spots-Beginning] (https://drive.google.com/file/d/1M1E-PPgrlwMyYfgqtN0UBiKryhkvRsv-/view?usp=sharing)
+- [Spots-Final](https://drive.google.com/file/d/151p96yTX6QPoz3uGM6hCkB4VLQXydnjZ/view?usp=drive_link)
+
 Link to project on GitHub Pages:
 https://brandovq.github.io/se_project_spots
-
-Link to video overview for this project:
-https://drive.google.com/file/d/1M1E-PPgrlwMyYfgqtN0UBiKryhkvRsv-/view?usp=sharing
