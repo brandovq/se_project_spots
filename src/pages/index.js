@@ -193,12 +193,7 @@ function getCardElement(data) {
   cardTitleEl.textContent = data.name;
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
-  const isOwner = getEntityId(data.owner) === currentUserId;
   let isLiked = getCardLikedState(data, currentUserId);
-
-  if (!isOwner) {
-    cardDeleteBtn.remove();
-  }
 
   cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
   //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
