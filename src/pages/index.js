@@ -1,6 +1,7 @@
 import "./index.css"; //Add this to fix my website layout to show up normal after typing in nmp run dev (nmp run build?) in terminal (to view it on the internet) to be able to see in on the browser correctly. This is because the css file is what gives the website its layout and design, so without it, the website would just show up as plain text and images without any styling.
 import {
   enableValidation,
+  disableButton,
   settings,
   resetValidation,
 } from "../scripts/validation.js";
@@ -315,8 +316,7 @@ function handleAddCardSubmit(evt) {
       cardsList.prepend(cardElement);
       closeModal(cardModal);
       evt.target.reset();
-      cardSubmitBtn.disabled = true;
-      cardSubmitBtn.classList.add(settings.inactiveButtonClass);
+      disableButton(cardSubmitBtn, settings);
     })
     .catch(console.error)
     .finally(() => {
