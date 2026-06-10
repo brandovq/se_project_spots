@@ -18,6 +18,7 @@ const api = new Api({
 
 let currentUserId;
 
+// This fallback helper function made the like buttons work again. And with both the old and new API response formats. It checks if the card data has an "isLiked" property (new format) or a "likes" array (old format) to determine if the card is liked by the current user.
 function getEntityId(entity) {
   if (!entity) {
     return null;
@@ -30,6 +31,7 @@ function getEntityId(entity) {
   return entity.id || entity._id || null;
 }
 
+// (Uses liked isLiked) Likes and unlikes can have different data structures, so this function checks both possible formats to determine if the card is liked by the current user.
 function getCardLikedState(cardData, userId) {
   if (typeof cardData?.isLiked === "boolean") {
     return cardData.isLiked;
