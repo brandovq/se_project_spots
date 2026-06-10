@@ -7,12 +7,30 @@
 .profile__avatar-container {
   position: relative;
   margin-right: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.profile__avatar-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.25);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.profile__avatar-container:hover::before {
+  opacity: 1;
 }
 
 .profile__avatar-btn {
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
   display: flex;
@@ -39,6 +57,7 @@
 
 .profile__avatar {
   /* margin-right: 20px; */
+  display: block;
   border-radius: 8px;
   height: 190px;
   width: 190px;
@@ -146,7 +165,17 @@
     margin-right: 0;
     width: 80px;
     height: 80px;
-    margin: 0 0 12px;
+    margin: 0;
+  }
+
+  /* fixed the extra right margin from desktop for mobile */
+  .profile__avatar-container {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .profile__avatar-container::before {
+    display: none;
   }
 
   /* finish mobile avatar button styling below????*/
@@ -156,8 +185,17 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 0 6px;
+    /* padding: 0 8px 6px 0; */
+    background-image: url("../images/Mobile Avatar btn.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 24px 24px;
+    margin: -24px -5px;
     visibility: hidden;
+  }
+
+  .profile__pencil-icon {
+    display: none;
   }
 
   /*set content of ::after element to "" */

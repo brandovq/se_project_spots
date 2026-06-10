@@ -26,7 +26,7 @@
             <button class="profile__avatar-btn">
               <img
                 class="profile__pencil-icon"
-                src="<%=require('./images/pencil.svg')%>"
+                src="<%=require('./images/pencil-white.svg')%>"
                 alt="Pencil icon"
               />
             </button>
@@ -253,21 +253,22 @@
       </div>
 
       <div class="modal" id="avatar-modal">
+        <!-- IMPORTANT: make sure id (above) is the same as the one in the js file for the avatar modal (to select it on the dom in index.js. Remember on index.js you need to add the # which signifies the ID), if not it won't work. Also make sure to add the id for the input and span tag for the avatar form in the html and make sure they are the same as the ones in the js file for validation to work. -->
         <div class="modal__container">
           <button type="button" class="modal__close-btn"></button>
-          <h2 class="modal__title">Change profile picture</h2>
-          <form name="edit-avatar" class="modal__form" novalidate>
+          <h3 class="modal__title">Edit profile avatar</h3>
+          <form class="modal__form" id="edit-avatar-form" novalidate>
             <label class="modal__label" for="profile-avatar-input">
-              Avatar URL
+              Profile picture
               <input
                 id="profile-avatar-input"
                 class="modal__input"
                 name="avatar"
-                placeholder="Paste an image link"
-                type="url"
+                placeholder="Paste a link to your avatar"
                 required
               />
               <span id="profile-avatar-input-error" class="modal__error"></span>
+              <!-- Just a good to know make sure to make the span tag's ID the same as the id for the input for Avatar above to make validation work -->
             </label>
             <button
               type="submit"
@@ -279,12 +280,36 @@
         </div>
       </div>
 
-      <div class="modal" id="delete-confirmation-modal">
-        <div class="modal__container">
-          <button type="button" class="modal__close-btn"></button>
-          <h2 class="modal__title">Are you sure?</h2>
-          <form name="delete-card" class="modal__form" novalidate>
-            <button type="submit" class="modal__submit-btn">Delete</button>
+      <!-- Styled the modal below based on figma design -->
+      <div class="modal" id="delete-modal">
+        <!-- To see modal when your adding css styles and havent done javascript yet, just add the modal_opened class next to current the modal class and it will show up. Then when you add the javascript you can remove the modal_opened class and it will work with the js to open and close the modal when you click on the delete button for each card. -->
+        <!-- IMPORTANT: make sure id (above) is the same as the one in the js file for the delete modal (to select it on the dom in index.js. Remember on index.js you need to add the # which signifies the ID), if not it won't work. Also make sure to add the id for the input and span tag for the delete form in the html and make sure they are the same as the ones in the js file for validation to work. -->
+        <div class="modal__container modal__container_type_delete">
+          <button
+            type="button"
+            class="modal__close-btn modal__close-btn_type_delete"
+          ></button>
+          <h3 class="modal__title modal__title_type_delete">
+            Are you sure you want to delete this image?
+          </h3>
+          <form
+            class="modal__form modal__form_type_delete"
+            id="delete-form"
+            novalidate
+          >
+            <button
+              type="submit"
+              class="modal__submit-btn modal__submit-btn_type_delete"
+            >
+              Delete
+            </button>
+
+            <button
+              type="button"
+              class="modal__submit-btn modal__submit-btn_type_cancel"
+            >
+              Cancel
+            </button>
           </form>
         </div>
       </div>

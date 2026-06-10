@@ -120,16 +120,19 @@ const profileDescription = document.querySelector(".profile__description");
 
 //Form elements for Modal 3
 const avatarModal = document.querySelector("#avatar-modal");
-const avatarForm = avatarModal.querySelector(".modal__form");
+const avatarForm = avatarModal.querySelector("#edit-avatar-form");
 const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const avatarInput = avatarModal.querySelector("#profile-avatar-input");
 const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
 
 //Form elements for Modal 4
-const deleteModal = document.querySelector("#delete-confirmation-modal");
-const deleteForm = deleteModal.querySelector(".modal__form");
+const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = deleteModal.querySelector("#delete-form");
 const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
 const deleteSubmitBtn = deleteModal.querySelector(".modal__submit-btn");
+const deleteCancelBtn = deleteModal.querySelector(
+  ".modal__submit-btn_type_cancel",
+);
 
 let cardToDeleteId = null;
 let cardToDeleteElement = null;
@@ -401,10 +404,18 @@ avatarModalCloseBtn.addEventListener("click", () => {
 });
 
 deleteModalCloseBtn.addEventListener("click", () => {
+  closeDeleteModal();
+});
+
+deleteCancelBtn.addEventListener("click", () => {
+  closeDeleteModal();
+});
+
+function closeDeleteModal() {
   closeModal(deleteModal);
   cardToDeleteId = null;
   cardToDeleteElement = null;
-});
+}
 
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardForm.addEventListener("submit", handleAddCardSubmit);
