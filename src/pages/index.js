@@ -5,7 +5,6 @@ import {
   resetValidation,
 } from "../scripts/validation.js";
 import Api from "../utils/Api.js";
-import { data } from "autoprefixer";
 
 enableValidation(settings);
 
@@ -17,10 +16,14 @@ const api = new Api({
   },
 });
 
+let currentUserId;
+
 //destructured the second item in the callback of the .then() below
 api
   .getAppInfo()
   .then(([cards, userInfo]) => {
+    currentUserId = userInfo._id;
+
     cards.forEach((item) => {
       const cardElement = getCardElement(item);
       cardsList.append(cardElement);
@@ -85,6 +88,7 @@ const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
 
 const profileAvatar = document.querySelector(".profile__avatar");
+const profileAvatarBtn = document.querySelector(".profile__avatar-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
@@ -139,9 +143,28 @@ function getCardElement(data) {
   cardTitleEl.textContent = data.name;
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
+  const isOwner = data.owner && data.owner._id === currentUserId;
+  let isLiked = data.likes
+    ? data.likes.some((like) => like._id === currentUserId)
+    : false;
+
+  if (!isOwner) {
+    cardDeleteBtn.remove();
+  }
+
+  cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
   //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
   cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-btn_liked");
+    const likeRequest = isLiked
+      ? api.unlikeCard(data._id)
+      : api.likeCard(data._id);
+
+    likeRequest
+      .then((updatedCard) => {
+        isLiked = updatedCard.likes.some((like) => like._id === currentUserId);
+        cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
+      })
+      .catch(console.error);
   });
   //LIKE BUTTON (above): Step 2 add the event listener for the like button and STEP 3 add event handler
 
@@ -154,7 +177,12 @@ function getCardElement(data) {
   /*       Step 2 for previewModal = add event listener     */
 
   cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
+    api
+      .deleteCard(data._id)
+      .then(() => {
+        cardElement.remove();
+      })
+      .catch(console.error);
   });
   //DELETE BUTTON (above) step 2 add event listener, then step 3 add handler to remove card from DOM. I used arrow function which acts as the event handler.
 
@@ -220,18 +248,34 @@ function handleEditFormSubmit(evt) {
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
   const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
-  //The step above makes the image name and actual image appear when adding a new card
-  const cardElement = getCardElement(inputValues);
-  cardsList.prepend(cardElement);
-  //To make the new card appear as the first card instead of the last I added prepend above instead of append (this one adds the new card at the end not at the beginning which is what we don't want
-  // cardNameInput.value = "";
-  // cardLinkInput.value = "";
-  //The two lines above clear the input fields after clicking save and successfully adding of a new card to let the user add the 2nd one again without having to remove the old data manually.
-  closeModal(cardModal);
-  //closeModal above closes the modal after clicking save
-  evt.target.reset(); // Resets the form fields (GOOD TO KNOW: The two commens above weren't needed anymore. So I removed it. evt.target.reset() does the same job and clears the inputs at once)
-  disableButton(cardSubmitBtn, settings);
+
+  api
+    .addCard(inputValues)
+    .then((newCard) => {
+      const cardElement = getCardElement(newCard);
+      cardsList.prepend(cardElement);
+      closeModal(cardModal);
+      evt.target.reset();
+      cardSubmitBtn.disabled = true;
+      cardSubmitBtn.classList.add(settings.inactiveButtonClass);
+    })
+    .catch(console.error);
 }
+
+profileAvatarBtn.addEventListener("click", () => {
+  const avatar = window.prompt("Enter new avatar URL", profileAvatar.src);
+
+  if (!avatar) {
+    return;
+  }
+
+  api
+    .updateAvatar({ avatar })
+    .then((userData) => {
+      profileAvatar.src = userData.avatar;
+    })
+    .catch(console.error);
+});
 
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
