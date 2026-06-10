@@ -109,7 +109,7 @@ api
 //   },
 // ];
 
-//Profile elements
+//Profile elements below
 const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
 
@@ -118,14 +118,14 @@ const profileAvatarBtn = document.querySelector(".profile__avatar-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
-//Form elements for Modal 3
+//Form elements for Modal 3 Avatar-modal
 const avatarModal = document.querySelector("#avatar-modal");
 const avatarForm = avatarModal.querySelector("#edit-avatar-form");
 const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const avatarInput = avatarModal.querySelector("#profile-avatar-input");
 const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
 
-//Form elements for Modal 4
+//Form elements for Modal 4 Delete-modal
 const deleteModal = document.querySelector("#delete-modal");
 const deleteForm = deleteModal.querySelector("#delete-form");
 const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
@@ -137,7 +137,7 @@ const deleteCancelBtn = deleteModal.querySelector(
 let cardToDeleteId = null;
 let cardToDeleteElement = null;
 
-//Form elements for Modal 1
+//Form elements for Modal 1 Edit-profile-modal
 const editModal = document.querySelector("#edit-modal");
 const editFormElement = editModal.querySelector(".modal__form");
 const editModalCloseBtn = editModal.querySelector(".modal__close-btn");
@@ -146,7 +146,7 @@ const editModalDescriptionInput = editModal.querySelector(
   "#profile-description-input",
 );
 
-//Form elements for Modal 2
+//Form elements for Modal 2 Add-card-modal
 const cardModal = document.querySelector("#add-card-modal");
 const cardForm = cardModal.querySelector(".modal__form");
 /*  Good to know: I added this part below for the resetValidation code which just removed the error message when the modal opens again, it doesn't just stay there. after reopening */
