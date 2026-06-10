@@ -251,6 +251,43 @@
           </div>
         </div>
       </div>
+
+      <div class="modal" id="avatar-modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn"></button>
+          <h2 class="modal__title">Change profile picture</h2>
+          <form name="edit-avatar" class="modal__form" novalidate>
+            <label class="modal__label" for="profile-avatar-input">
+              Avatar URL
+              <input
+                id="profile-avatar-input"
+                class="modal__input"
+                name="avatar"
+                placeholder="Paste an image link"
+                type="url"
+                required
+              />
+              <span id="profile-avatar-input-error" class="modal__error"></span>
+            </label>
+            <button
+              type="submit"
+              class="modal__submit-btn modal__submit-btn_disabled"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="delete-confirmation-modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn"></button>
+          <h2 class="modal__title">Are you sure?</h2>
+          <form name="delete-card" class="modal__form" novalidate>
+            <button type="submit" class="modal__submit-btn">Delete</button>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>

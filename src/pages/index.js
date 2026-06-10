@@ -18,11 +18,35 @@ const api = new Api({
 
 let currentUserId;
 
+function getEntityId(entity) {
+  if (!entity) {
+    return null;
+  }
+
+  if (typeof entity === "string") {
+    return entity;
+  }
+
+  return entity.id || entity._id || null;
+}
+
+function getCardLikedState(cardData, userId) {
+  if (typeof cardData?.isLiked === "boolean") {
+    return cardData.isLiked;
+  }
+
+  if (Array.isArray(cardData?.likes)) {
+    return cardData.likes.some((likeUser) => getEntityId(likeUser) === userId);
+  }
+
+  return false;
+}
+
 //destructured the second item in the callback of the .then() below
 api
   .getAppInfo()
   .then(([cards, userInfo]) => {
-    currentUserId = userInfo._id;
+    currentUserId = getEntityId(userInfo);
 
     cards.forEach((item) => {
       const cardElement = getCardElement(item);
@@ -92,6 +116,22 @@ const profileAvatarBtn = document.querySelector(".profile__avatar-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
+//Form elements for Modal 3
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarForm = avatarModal.querySelector(".modal__form");
+const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
+const avatarInput = avatarModal.querySelector("#profile-avatar-input");
+const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
+
+//Form elements for Modal 4
+const deleteModal = document.querySelector("#delete-confirmation-modal");
+const deleteForm = deleteModal.querySelector(".modal__form");
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
+const deleteSubmitBtn = deleteModal.querySelector(".modal__submit-btn");
+
+let cardToDeleteId = null;
+let cardToDeleteElement = null;
+
 //Form elements for Modal 1
 const editModal = document.querySelector("#edit-modal");
 const editFormElement = editModal.querySelector(".modal__form");
@@ -124,10 +164,15 @@ const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
+function setButtonLoading(button, isLoading, loadingText, defaultText) {
+  button.textContent = isLoading ? loadingText : defaultText;
+}
+
 //To explain what I did below, the getCardElement function is what's cloning the cards.
 //I just had to add the const cardTitle and const cardImage for src and alt to get added onto each card. The info that's being added to each card was added at the top of this javascript file. The name and link (which is the image for each card) is what's being cloned in the getCardElement function. That's how the info is showing on each card.
 
 function getCardElement(data) {
+  const cardId = getEntityId(data);
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
@@ -143,10 +188,8 @@ function getCardElement(data) {
   cardTitleEl.textContent = data.name;
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
-  const isOwner = data.owner && data.owner._id === currentUserId;
-  let isLiked = data.likes
-    ? data.likes.some((like) => like._id === currentUserId)
-    : false;
+  const isOwner = getEntityId(data.owner) === currentUserId;
+  let isLiked = getCardLikedState(data, currentUserId);
 
   if (!isOwner) {
     cardDeleteBtn.remove();
@@ -155,13 +198,15 @@ function getCardElement(data) {
   cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
   //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
   cardLikeBtn.addEventListener("click", () => {
-    const likeRequest = isLiked
-      ? api.unlikeCard(data._id)
-      : api.likeCard(data._id);
+    if (!cardId) {
+      return;
+    }
+
+    const likeRequest = isLiked ? api.unlikeCard(cardId) : api.likeCard(cardId);
 
     likeRequest
       .then((updatedCard) => {
-        isLiked = updatedCard.likes.some((like) => like._id === currentUserId);
+        isLiked = getCardLikedState(updatedCard, currentUserId);
         cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
       })
       .catch(console.error);
@@ -177,12 +222,9 @@ function getCardElement(data) {
   /*       Step 2 for previewModal = add event listener     */
 
   cardDeleteBtn.addEventListener("click", () => {
-    api
-      .deleteCard(data._id)
-      .then(() => {
-        cardElement.remove();
-      })
-      .catch(console.error);
+    cardToDeleteId = cardId;
+    cardToDeleteElement = cardElement;
+    openModal(deleteModal);
   });
   //DELETE BUTTON (above) step 2 add event listener, then step 3 add handler to remove card from DOM. I used arrow function which acts as the event handler.
 
@@ -231,6 +273,13 @@ function handleEscapeKey(event) {
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
+  setButtonLoading(
+    editFormElement.querySelector(".modal__submit-btn"),
+    true,
+    "Saving...",
+    "Save",
+  );
+
   api
     .editUserInfo({
       name: editModalNameInput.value,
@@ -242,12 +291,22 @@ function handleEditFormSubmit(evt) {
       profileDescription.textContent = data.about;
       closeModal(editModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonLoading(
+        editFormElement.querySelector(".modal__submit-btn"),
+        false,
+        "Saving...",
+        "Save",
+      );
+    });
 }
 
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
   const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
+
+  setButtonLoading(cardSubmitBtn, true, "Saving...", "Save");
 
   api
     .addCard(inputValues)
@@ -259,22 +318,56 @@ function handleAddCardSubmit(evt) {
       cardSubmitBtn.disabled = true;
       cardSubmitBtn.classList.add(settings.inactiveButtonClass);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonLoading(cardSubmitBtn, false, "Saving...", "Save");
+    });
 }
 
-profileAvatarBtn.addEventListener("click", () => {
-  const avatar = window.prompt("Enter new avatar URL", profileAvatar.src);
+function handleAvatarFormSubmit(evt) {
+  evt.preventDefault();
+  setButtonLoading(avatarSubmitBtn, true, "Saving...", "Save");
 
-  if (!avatar) {
+  api
+    .updateAvatar({ avatar: avatarInput.value })
+    .then((userData) => {
+      profileAvatar.src = userData.avatar;
+      closeModal(avatarModal);
+      avatarForm.reset();
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonLoading(avatarSubmitBtn, false, "Saving...", "Save");
+    });
+}
+
+function handleDeleteCardSubmit(evt) {
+  evt.preventDefault();
+
+  if (!cardToDeleteId || !cardToDeleteElement) {
     return;
   }
 
+  setButtonLoading(deleteSubmitBtn, true, "Deleting...", "Delete");
+
   api
-    .updateAvatar({ avatar })
-    .then((userData) => {
-      profileAvatar.src = userData.avatar;
+    .deleteCard(cardToDeleteId)
+    .then(() => {
+      cardToDeleteElement.remove();
+      closeModal(deleteModal);
+      cardToDeleteId = null;
+      cardToDeleteElement = null;
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonLoading(deleteSubmitBtn, false, "Deleting...", "Delete");
+    });
+}
+
+profileAvatarBtn.addEventListener("click", () => {
+  avatarInput.value = profileAvatar.src;
+  resetValidation(avatarForm, [avatarInput], settings);
+  openModal(avatarModal);
 });
 
 profileEditButton.addEventListener("click", () => {
@@ -301,8 +394,20 @@ cardModalCloseBtn.addEventListener("click", () => {
   closeModal(cardModal);
 });
 
+avatarModalCloseBtn.addEventListener("click", () => {
+  closeModal(avatarModal);
+});
+
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+  cardToDeleteId = null;
+  cardToDeleteElement = null;
+});
+
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardForm.addEventListener("submit", handleAddCardSubmit);
+avatarForm.addEventListener("submit", handleAvatarFormSubmit);
+deleteForm.addEventListener("submit", handleDeleteCardSubmit);
 /*     Add the following below profileEditButton just to see if "CLICKED" appears on the console in developer tools if it shows CLICKED and not null or something then it was done corrrect and there's no type or anything like that:      console.log("CLICKED");       */
 /*     IMPORTANT: you dont put . on the modal_opened becasue its a classlist. You don't use . on classLists       */
 
