@@ -41,5 +41,4 @@ Project pitch-spots-beginning:
 https://drive.google.com/file/d/1M1E-PPgrlwMyYfgqtN0UBiKryhkvRsv-/view?usp=sharing
 
 Project pitch-spots-final:
-Link to video overview for this project:
 https://drive.google.com/file/d/151p96yTX6QPoz3uGM6hCkB4VLQXydnjZ/view?usp=drive_link
