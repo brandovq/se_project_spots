@@ -46,7 +46,10 @@
   border: none;
   background-color: transparent;
   opacity: 40%;
-  transition: opacity 0.2s;
+  /* Like/Unlike Lag Fix - Step 9: Shorter transition reduces perceived delay in visual feedback. */
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
   cursor: pointer;
 }
 
@@ -61,6 +64,11 @@
 
 .card__like-btn_liked:hover {
   background-image: url(../images/like-icon-liked-hover.svg);
+}
+
+.card__like-btn:active {
+  /* Like/Unlike Lag Fix - Step 10: Quick press scale provides immediate tactile feedback on click. */
+  transform: scale(0.92);
 }
 
 .card__delete-btn {

@@ -195,22 +195,51 @@ function getCardElement(data) {
   cardImageEl.src = data.link;
   cardImageEl.alt = data.name;
   let isLiked = getCardLikedState(data, currentUserId);
+  // Like/Unlike Lag Fix - Step 1: Track request state so repeated rapid clicks do not queue conflicting API calls.
+  let likeRequestInFlight = false;
 
   cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
   //TODO, last step: assign values to the image src and alt attributes (2nd and 3rd line above is what I added)
   cardLikeBtn.addEventListener("click", () => {
-    if (!cardId) {
+    // Like/Unlike Lag Fix - Step 2: Exit early if card id is missing or a previous like/unlike request is still running.
+    if (!cardId || likeRequestInFlight) {
       return;
     }
 
-    const likeRequest = isLiked ? api.unlikeCard(cardId) : api.likeCard(cardId);
+    // Like/Unlike Lag Fix - Step 3: Save previous state, compute next state, then update UI immediately (optimistic update).
+    const previousLikedState = isLiked;
+    const nextLikedState = !isLiked;
+
+    // Update UI immediately so the like action feels responsive.
+    isLiked = nextLikedState;
+    cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
+
+    // Like/Unlike Lag Fix - Step 4: Lock button during request to keep state transitions predictable.
+    likeRequestInFlight = true;
+    cardLikeBtn.disabled = true;
+
+    // Like/Unlike Lag Fix - Step 5: Send the matching API request based on the newly intended state.
+    const likeRequest = nextLikedState
+      ? api.likeCard(cardId)
+      : api.unlikeCard(cardId);
 
     likeRequest
       .then((updatedCard) => {
+        // Like/Unlike Lag Fix - Step 6: Re-sync from server response so local UI matches backend truth.
         isLiked = getCardLikedState(updatedCard, currentUserId);
         cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
       })
-      .catch(console.error);
+      .catch((error) => {
+        // Like/Unlike Lag Fix - Step 7: If request fails, restore previous state to avoid false visual feedback.
+        isLiked = previousLikedState;
+        cardLikeBtn.classList.toggle("card__like-btn_liked", isLiked);
+        console.error(error);
+      })
+      .finally(() => {
+        // Like/Unlike Lag Fix - Step 8: Always unlock button after request settles.
+        likeRequestInFlight = false;
+        cardLikeBtn.disabled = false;
+      });
   });
   //LIKE BUTTON (above): Step 2 add the event listener for the like button and STEP 3 add event handler
 
